@@ -9,12 +9,9 @@ import * as usersModel from '../users/model';
 
 export interface I<%= TitleSingular %> {
   id?: number;
-  title: string;
   created_at?: Date;
   updated_at?: Date;
 }
-
-export const defaultAttributes = ['created_at', 'updated_at'];
 
 interface IQuery {
   id?: number | number[];
@@ -23,12 +20,11 @@ interface IQuery {
 
 const numberOrNumbersSchema = Joi.alternatives([
   Joi.number(),
-  Joi.array().<%= title %>(Joi.number()),
+  Joi.array().items(Joi.number()),
 ]);
 
 const <%= TitleSingular %>QuerySchema = Joi.object().keys({
   id: numberOrNumbersSchema,
-  user_id: Joi.number(),
 });
 
 export function index(q: IQuery = {}, includes=[], opts: queryHelper.IOpts = {}): Promise<I<%= TitleSingular %>[]> {
@@ -36,7 +32,7 @@ export function index(q: IQuery = {}, includes=[], opts: queryHelper.IOpts = {})
   if (result.error) return Promise.reject(result.error);
 
   let p = queryHelper.getBuilder(knex, '<%= title %>', opts, {
-    defaultSelect: defaultAttributes,
+    defaultSelect: ['created_at', 'updated_at'],
   });
 
   const multiFilters = [
@@ -60,10 +56,10 @@ export function index(q: IQuery = {}, includes=[], opts: queryHelper.IOpts = {})
     let <%= title %>Ids = <%= title %>.map(x => x.id);
 
     /*
-    if (includes.indexOf('tester') !== -1) {
-      let userIds = bugs.map(x => x.tester_id);
-      let p = usersModel.index({id: userIds}, [], opts)
-      .then(xs => queryHelper.mapIncludes(bugs, xs, 'tester', 'tester_id', 'id', false))
+    if (includes.indexOf('example') !== -1) {
+      let <%= titleSingular %>Ids = <%= title %>.map(x => x.example_id);
+      let p = <%= title %>.Model.index({id: <%= titleSingular %>Ids}, [], opts)
+      .then(xs => queryHelper.mapIncludes(<%= title %>, xs, 'example', 'example_id', 'id', false))
 
       ps.push(p);
     }
@@ -75,9 +71,9 @@ export function index(q: IQuery = {}, includes=[], opts: queryHelper.IOpts = {})
 }
 
 const <%= TitleSingular %>UpdateSchema = Joi.object().keys({
-  title: Joi.string().min(1),
+
 }).or([
-  'title',
+
 ]);
 
 export function update(id: number, changes: any, userId?: number): Promise<number> {
@@ -98,8 +94,8 @@ export function update(id: number, changes: any, userId?: number): Promise<numbe
   }) as any;
 }
 
-const <%= TitleSingular %>CreateSchema = Joi.array().<%= title %>(Joi.object().keys({
-  title: Joi.string().min(1).required(),
+const <%= TitleSingular %>CreateSchema = Joi.array().items(Joi.object().keys({
+
 }));
 
 /**
@@ -111,21 +107,21 @@ export function create(<%= title %>: I<%= TitleSingular %>[], includes: string[]
     const result = Joi.validate(<%= title %>, <%= TitleSingular %>CreateSchema);
     if (result.error) return reject(result.error);
 
-    //let projectIds = [];
+    //let exampleIds = [];
     for (let i = 0; i < <%= title %>.length; i += 1) {
       let <%= titleSingular %> = <%= title %>[i];
       <%= titleSingular %>.created_at = new Date();
       <%= titleSingular %>.updated_at = new Date();
-      //projectIds.push(<%= titleSingular %>.project_id);
+      //exampleIds.push(<%= titleSingular %>.example_id);
 
     }
 
     return new Promise((resolve, reject) => {
       /*
       if (userId) {
-        projectsModel.index({id: projectIds, user_id: userId}, [], {fields: {projects: 'id'}})
-        .then(projects => {
-          if (projects.length !== projectIds.length) throw new Errors.ForbiddenError();
+        examplesModel.index({id: exampleIds, user_id: userId}, [], {fields: {examples: 'id'}})
+        .then(examples => {
+          if (examples.length !== examplesIds.length) throw new Errors.ForbiddenError();
           resolve();
         })
         .catch(reject);
@@ -156,8 +152,8 @@ export function remove(ids: (string|number)[], userId?: number) {
 function setUserRelation(p, userId) {
   return p;
   /*
-  return p.whereIn('bugs.project_id', function() {
-      return this.from('projects_permissions').select('project_id').where('user_id', userId);
+  return p.whereIn('<%= title %>.example_id', function() {
+      return this.from('example_permissions').select('example_id').where('user_id', userId);
     });
   */
 }
