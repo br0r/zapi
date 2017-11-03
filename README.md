@@ -1,0 +1,3 @@
+# zapi
+
+`yo zapi [NAME]`
