@@ -1,4 +1,5 @@
 import * as express from 'express';
+import logger from '../logger';
 
 import * as Errors from '../errors';
 import * as controllerHelper from '../helpers/controller_helper';

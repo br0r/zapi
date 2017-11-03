@@ -37,19 +37,19 @@ export function create(req: express.Request, <%= titleSingular %>: I<%= TitleSin
   }
 }
 
-export function show(req: express.Request, <%= titleSingular %>s: I<%= TitleSingular %>): object {
+export function show(req: express.Request, <%= titleSingular %>: I<%= TitleSingular %>): object {
   let t = req.accepts(['json']);
   if (t === 'json') {
-    return <%= TitleSingular %>Serializer.serialize(req, <%= titleSingular %>s);
+    return <%= TitleSingular %>Serializer.serialize(req, <%= titleSingular %>);
   } else {
     throw new Errors.NotAcceptableError();
   }
 }
 
-export function index(req: express.Request, <%= titleSingular %>s: I<%= TitleSingular %>[]): object {
+export function index(req: express.Request, <%= title %>: I<%= TitleSingular %>[]): object {
   let t = req.accepts(['json']);
   if (t === 'json') {
-    return <%= TitleSingular %>Serializer.serialize(req, <%= titleSingular %>s);
+    return <%= TitleSingular %>Serializer.serialize(req, <%= title %>);
   } else {
     throw new Errors.NotAcceptableError();
   }

@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { Serializer } from '../helpers/jsonapi_helper';
 import * as Errors from '../errors';
+import logger from '../logger';
 
 import {IUser} from './model';
 

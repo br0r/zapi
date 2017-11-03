@@ -1,4 +1,5 @@
 import * as Joi from 'joi';
+import logger from '../logger';
 
 import * as Errors from '../errors';
 import {knex} from '../db';
@@ -60,7 +61,7 @@ export function index(q: IQuery = {}, includes=[], opts: queryHelper.IOpts = {})
     /*
     if (includes.indexOf('example') !== -1) {
       let <%= titleSingular %>Ids = <%= title %>.map(x => x.example_id);
-      let p = <%= title %>.Model.index({id: <%= titleSingular %>Ids}, [], opts)
+      let p = <%= title %>Model.index({id: <%= titleSingular %>Ids}, [], opts)
       .then(xs => queryHelper.mapIncludes(<%= title %>, xs, 'example', 'example_id', 'id', false))
 
       ps.push(p);
