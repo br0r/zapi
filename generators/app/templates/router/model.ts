@@ -28,13 +28,14 @@ const numberOrNumbersSchema = Joi.alternatives([
 
 const <%= TitleSingular %>QuerySchema = Joi.object().keys({
   id: numberOrNumbersSchema,
+  user_id: numberOrNumbersSchema,
 });
 
 export function index(q: IQuery = {}, includes=[], opts: queryHelper.IOpts = {}): Promise<I<%= TitleSingular %>[]> {
   const result = Joi.validate(q, <%= TitleSingular %>QuerySchema);
   if (result.error) return Promise.reject(result.error);
 
-  let p = queryHelper.getBuilder(knex, '<%= title %>', opts, {
+  let p = queryHelper.getBuilder(knex, '<%= snake_title %>', opts, {
     defaultSelect: defaultAttributes,
   });
 
@@ -45,7 +46,7 @@ export function index(q: IQuery = {}, includes=[], opts: queryHelper.IOpts = {})
   for (let k in q) {
     let v = q[k];
     if (multiFilters.indexOf(k) !== -1) {
-      p = p.whereIn('<%= title %>.' + k, v);
+      p = p.whereIn('<%= snake_title %>.' + k, v);
     }  
   }
 
@@ -85,7 +86,7 @@ export function update(id: number, changes: any, userId?: number): Promise<numbe
   if (result.error) return Promise.reject(result.error);
   changes.updated_at = new Date();
 
-  let p = knex('<%= title %>');
+  let p = knex('<%= snake_title %>');
   if (userId) setUserRelation(p, userId);
 
   return p.where('id', id)
@@ -135,7 +136,7 @@ export function create(<%= title %>: I<%= TitleSingular %>[], includes: string[]
       resolve();
     })
     .then(() => {
-      return knex('<%= title %>')
+      return knex('<%= snake_title %>')
         .insert(<%= title %>)
         .returning('id');
     })
@@ -146,8 +147,8 @@ export function create(<%= title %>: I<%= TitleSingular %>[], includes: string[]
 
 export function remove(ids: (string|number)[], userId?: number) {
   ids = ids.map(Number.parseInt).filter(x => Number.isInteger(x));
-  let p = knex('<%= title %>')
-    .whereIn('<%= title %>.id', ids);
+  let p = knex('<%= snake_title %>')
+    .whereIn('<%= snake_title %>.id', ids);
   if (userId) setUserRelation(p, userId);
   return p.del();
 }

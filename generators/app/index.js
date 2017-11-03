@@ -29,14 +29,16 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    const name = this.name.toLowerCase();
+    const name = this.name.toLowerCase().replace(/([\-_]\w)/g, function(m){return m[1].toUpperCase();});
     const suffix = /y$/.test(name) ? 'ies' : 's';
     const end = suffix === 'ies' ? name.length - 1 : name.length;
+    const snake_title = name.replace(/([A-Z])/g, function($1){return "_"+$1.toLowerCase();});
     const names = {
       Title: name.charAt(0).toUpperCase() + name.substr(1, end) + suffix,
       TitleSingular: name.charAt(0).toUpperCase() + name.substr(1),
       title: name.substr(0, end) + suffix,
       titleSingular: name,
+      snake_title: snake_title.substr(0, (suffix === 'ies'  ? snake_title.length - 1 : snake_title.length)) + suffix,
     };
 
     if (this.options.index) {
@@ -47,7 +49,7 @@ module.exports = class extends Generator {
 
     this.fs.copyTpl(
       this.templatePath('./router/*.ts'),
-      this.destinationPath(names.title),
+      this.destinationPath(names.snake_title),
       names
     )
   }
