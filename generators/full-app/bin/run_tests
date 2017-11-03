@@ -1,0 +1,12 @@
+#!/bin/bash
+npm run build || true
+NODE_ENV=test PORT=8051 node ./build/server/index.js &
+id=$!
+echo Server pid: $id
+NODE_ENV=test knex migrate:rollback
+NODE_ENV=test knex migrate:latest
+NODE_ENV=test PORT=8051 ./node_modules/mocha/bin/mocha --timeout 2000 --recursive test "$@"
+status=$?
+kill -INT $id
+echo killed $id
+exit $status

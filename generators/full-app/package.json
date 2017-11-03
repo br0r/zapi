@@ -1,0 +1,41 @@
+{
+  "scripts": {
+    "start": "nodemon --watch server --watch templates -e pug,ts,js --exec ./node_modules/.bin/ts-node -- ./server/index.ts",
+    "build": "rm -rf build && tsc",
+    "test": "bin/run_tests"
+  },
+  "dependencies": {
+    "blocked": "^1.2.1",
+    "body-parser": "^1.17.2",
+    "busboy": "^0.2.14",
+    "compression": "^1.7.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.3",
+    "joi": "^10.6.0",
+    "jsonapi-serializer": "^3.5.5",
+    "jwt-simple": "^0.5.1",
+    "knex": "^0.13.0",
+    "moment": "^2.18.1",
+    "morgan": "^1.8.2",
+    "nodemon": "^1.11.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.0",
+    "pg": "^7.0.2",
+    "socket.io": "^2.0.3",
+    "type-is": "^1.6.15",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.0.36",
+    "@types/joi": "^10.4.0",
+    "@types/knex": "0.0.57",
+    "@types/node": "^8.0.19",
+    "@types/passport": "^0.3.4",
+    "@types/passport-jwt": "^2.0.24",
+    "@types/socket.io": "^1.4.29",
+    "mocha": "^3.5.0",
+    "supertest": "^3.0.0",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.4.2"
+  }
+}

@@ -1,0 +1,20 @@
+version: '2'
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: 'test'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_DB: 'db'
+    volumes:
+      - postgres-datavolume:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  server:
+    build: .
+    ports:
+      - "8050:8050"
+    depends_on:
+      - postgres
+volumes:
+  postgres-datavolume:

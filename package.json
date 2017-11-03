@@ -1,0 +1,22 @@
+{
+  "name": "generator-zapi",
+  "version": "1.0.0",
+  "description": "Yeoman generator for zapi",
+  "main": "index.js",
+  "files": [
+    "generators"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/br0r/generator-zapi.git"
+  },
+  "author": "Viktor Silfverström <viktor@silfverstrom.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/br0r/generator-zapi/issues"
+  },
+  "homepage": "https://github.com/br0r/generator-zapi#readme"
+}

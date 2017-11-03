@@ -1,0 +1,8 @@
+import * as knexFile from './knexfile';
+
+export const port = process.env.PORT || 8050;
+
+export const db = knexFile[process.env.NODE_ENV || 'development'];
+
+export const jwtSecret = 'secret';
+export const jwtIssuer = 'localhost';
